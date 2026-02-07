@@ -1,0 +1,490 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teaching Resources | The Geelong College</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Roboto+Slab:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #002550;
+            --green: #004712;
+            --gold: #ad926b;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --text-dark: #2c3e50;
+            --text-light: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--light-bg);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--green) 100%);
+            color: var(--white);
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-family: 'Roboto Slab', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .intro {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--gold);
+        }
+
+        .intro h2 {
+            font-family: 'Roboto Slab', serif;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .intro p {
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .resources-grid.expanded {
+            max-height: none;
+            opacity: 1;
+            margin-bottom: 2rem;
+        }
+
+        .category-section {
+            margin-bottom: 1rem;
+        }
+
+        .category-header {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-left: 4px solid var(--navy);
+        }
+
+        .category-header:hover {
+            box-shadow: 0 4px 8px rgba(0, 37, 80, 0.1);
+            border-left-color: var(--green);
+        }
+
+        .category-header.expanded {
+            border-left-color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .category-header h2 {
+            margin: 0;
+            border: none;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+        }
+
+        .collapse-icon {
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .category-header.expanded .collapse-icon {
+            transform: rotate(180deg);
+        }
+
+        .resource-count {
+            background: var(--light-bg);
+            color: var(--text-light);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .resource-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-top: 3px solid var(--navy);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0, 37, 80, 0.15);
+            border-top-color: var(--green);
+        }
+
+        .resource-card h3 {
+            font-family: 'Roboto Slab', serif;
+            color: var(--navy);
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .resource-card h3 a {
+            color: var(--navy);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .resource-card h3 a:hover {
+            color: var(--green);
+        }
+
+        .resource-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .meta-tag {
+            background: var(--light-bg);
+            color: var(--text-light);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .meta-tag.subject {
+            background: var(--navy);
+            color: var(--white);
+        }
+
+        .meta-tag.year {
+            background: var(--green);
+            color: var(--white);
+        }
+
+        .resource-description {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            line-height: 1.5;
+        }
+
+        .resource-link {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--white);
+            padding: 0.6rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            align-self: flex-start;
+        }
+
+        .resource-link:hover {
+            background: var(--green);
+            transform: translateX(4px);
+        }
+
+        .no-resources {
+            text-align: center;
+            padding: 3rem;
+            background: var(--white);
+            border-radius: 8px;
+            color: var(--text-light);
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Teaching Resources</h1>
+        <p class="subtitle">The Geelong College</p>
+    </header>
+
+    <div class="container">
+        <div class="intro">
+            <h2>Welcome</h2>
+            <p>This directory contains teaching resources organized by subject and year level. Each resource features differentiated content with Foundation, Standard, and Advanced levels to support diverse learning needs.</p>
+            <p>Resources are regularly updated and automatically added to this page.</p>
+        </div>
+
+        {% assign sorted_resources = site.resources | sort: 'date' | reverse %}
+        {% if sorted_resources.size > 0 %}
+            
+            {% comment %}
+            Build a category structure from folder paths only (exclude filenames)
+            Extract categories from resource paths like _resources/English/Barbie/resource.html
+            Result should be: English/Barbie
+            {% endcomment %}
+            
+            {% assign categories = "" | split: "" %}
+            {% for resource in sorted_resources %}
+                {% assign path_parts = resource.path | split: "/" %}
+                {% assign category_path = "" %}
+                {% comment %}Loop through path parts but stop 2 before end to exclude filename{% endcomment %}
+                {% assign max_index = path_parts.size | minus: 2 %}
+                {% for i in (1..max_index) %}
+                    {% assign part = path_parts[i] %}
+                    {% if part != "_resources" %}
+                        {% if category_path == "" %}
+                            {% assign category_path = part %}
+                        {% else %}
+                            {% assign category_path = category_path | append: "/" | append: part %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                {% unless categories contains category_path %}
+                    {% if category_path != "" %}
+                        {% assign categories = categories | push: category_path %}
+                    {% endif %}
+                {% endunless %}
+            {% endfor %}
+            
+            {% assign sorted_categories = categories | sort %}
+            
+            {% for category in sorted_categories %}
+                {% assign category_resources = "" | split: "" %}
+                {% for resource in sorted_resources %}
+                    {% assign resource_category = "" %}
+                    {% assign path_parts = resource.path | split: "/" %}
+                    {% comment %}Build the resource's category path (excluding filename){% endcomment %}
+                    {% assign max_index = path_parts.size | minus: 2 %}
+                    {% for i in (1..max_index) %}
+                        {% assign part = path_parts[i] %}
+                        {% if part != "_resources" %}
+                            {% if resource_category == "" %}
+                                {% assign resource_category = part %}
+                            {% else %}
+                                {% assign resource_category = resource_category | append: "/" | append: part %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if resource_category == category %}
+                        {% assign category_resources = category_resources | push: resource %}
+                    {% endif %}
+                {% endfor %}
+                
+                <div class="category-section">
+                    <div class="category-header" data-category="{{ category | slugify }}">
+                        <h2>
+                            <svg class="collapse-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M6 8l4 4 4-4"/>
+                            </svg>
+                            {{ category | replace: "/", " / " }}
+                        </h2>
+                        <span class="resource-count">{{ category_resources.size }} resource{% if category_resources.size != 1 %}s{% endif %}</span>
+                    </div>
+                    
+                    <div class="resources-grid" data-category="{{ category | slugify }}">
+                        {% for resource in category_resources %}
+                        <div class="resource-card">
+                            <h3><a href="{{ resource.url | relative_url }}">{{ resource.title }}</a></h3>
+                            
+                            <div class="resource-meta">
+                                {% if resource.subject %}
+                                <span class="meta-tag subject">{{ resource.subject }}</span>
+                                {% endif %}
+                                {% if resource.year_level %}
+                                <span class="meta-tag year">Year {{ resource.year_level }}</span>
+                                {% endif %}
+                                {% if resource.topic %}
+                                <span class="meta-tag">{{ resource.topic }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            {% if resource.description %}
+                            <p class="resource-description">{{ resource.description }}</p>
+                            {% endif %}
+                            
+                            <a href="{{ resource.url | relative_url }}" class="resource-link">View Resource →</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            
+            {% comment %}
+            Handle uncategorized resources (in root _resources folder)
+            {% endcomment %}
+            {% assign uncategorized = "" | split: "" %}
+            {% for resource in sorted_resources %}
+                {% assign path_parts = resource.path | split: "/" %}
+                {% comment %}If only 2 parts (_resources/filename.html), it's uncategorized{% endcomment %}
+                {% if path_parts.size == 2 %}
+                    {% assign uncategorized = uncategorized | push: resource %}
+                {% endif %}
+            {% endfor %}
+            
+            {% if uncategorized.size > 0 %}
+                <div class="category-section">
+                    <div class="category-header" data-category="uncategorized">
+                        <h2>
+                            <svg class="collapse-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M6 8l4 4 4-4"/>
+                            </svg>
+                            General Resources
+                        </h2>
+                        <span class="resource-count">{{ uncategorized.size }} resource{% if uncategorized.size != 1 %}s{% endif %}</span>
+                    </div>
+                    
+                    <div class="resources-grid" data-category="uncategorized">
+                        {% for resource in uncategorized %}
+                        <div class="resource-card">
+                            <h3><a href="{{ resource.url | relative_url }}">{{ resource.title }}</a></h3>
+                            
+                            <div class="resource-meta">
+                                {% if resource.subject %}
+                                <span class="meta-tag subject">{{ resource.subject }}</span>
+                                {% endif %}
+                                {% if resource.year_level %}
+                                <span class="meta-tag year">Year {{ resource.year_level }}</span>
+                                {% endif %}
+                                {% if resource.topic %}
+                                <span class="meta-tag">{{ resource.topic }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            {% if resource.description %}
+                            <p class="resource-description">{{ resource.description }}</p>
+                            {% endif %}
+                            
+                            <a href="{{ resource.url | relative_url }}" class="resource-link">View Resource →</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            
+        {% else %}
+            <div class="no-resources">
+                <p>No resources available yet. Add resources to the <code>_resources</code> folder to see them listed here.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>&copy; {{ 'now' | date: "%Y" }} The Geelong College | Teaching Resources</p>
+    </footer>
+
+    <script>
+        // Category expand/collapse functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryHeaders = document.querySelectorAll('.category-header');
+            
+            // Load saved expansion states from localStorage
+            const savedStates = JSON.parse(localStorage.getItem('categoryStates') || '{}');
+            
+            categoryHeaders.forEach(header => {
+                const categoryId = header.dataset.category;
+                const grid = document.querySelector(`.resources-grid[data-category="${categoryId}"]`);
+                
+                // Check if this category should be expanded (default: all collapsed)
+                const shouldExpand = savedStates[categoryId] === true;
+                
+                if (shouldExpand) {
+                    header.classList.add('expanded');
+                    grid.classList.add('expanded');
+                }
+                
+                // Add click handler
+                header.addEventListener('click', function() {
+                    const isExpanded = header.classList.contains('expanded');
+                    
+                    // Toggle this category
+                    header.classList.toggle('expanded');
+                    grid.classList.toggle('expanded');
+                    
+                    // Save state
+                    savedStates[categoryId] = !isExpanded;
+                    localStorage.setItem('categoryStates', JSON.stringify(savedStates));
+                });
+            });
+            
+            // If no saved states exist, expand the first category by default
+            if (Object.keys(savedStates).length === 0 && categoryHeaders.length > 0) {
+                const firstHeader = categoryHeaders[0];
+                const firstCategoryId = firstHeader.dataset.category;
+                const firstGrid = document.querySelector(`.resources-grid[data-category="${firstCategoryId}"]`);
+                
+                firstHeader.classList.add('expanded');
+                firstGrid.classList.add('expanded');
+                
+                savedStates[firstCategoryId] = true;
+                localStorage.setItem('categoryStates', JSON.stringify(savedStates));
+            }
+        });
+    </script>
+</body>
+</html>
