@@ -1,0 +1,25 @@
+# Site settings
+title: "Teaching Resources"
+description: "The Geelong College Teaching Resources"
+baseurl: "/mrwinter" # Your GitHub repo name
+url: "" # Your GitHub Pages URL will be https://username.github.io/mrwinter
+
+# Collections
+collections:
+  resources:
+    output: true
+    permalink: /:collection/:name
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "resources"
+    values:
+      layout: "resource"
+
+# Exclude from processing
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
